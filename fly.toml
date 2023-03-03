@@ -3,6 +3,7 @@
 app = "steal-dog-discord-bot"
 
 [env]
+  NODE_ENV = "production"
 
 [build]
   dockerfile = "dockerfile"

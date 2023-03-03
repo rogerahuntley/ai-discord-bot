@@ -5,8 +5,9 @@ dotenv.config()
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN || '';
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID || '';
+const DEV = process.env.NODE_ENV != 'production'
 
-const commands = [
+let commands = [
   new SlashCommandBuilder()
     .setName('ai')
     .setDescription('Short AI Query')
@@ -21,6 +22,12 @@ new SlashCommandBuilder()
     option.setName('input')
       .setDescription('The input to ask Ra'))
 ].map(command => command.toJSON());
+
+if(DEV){
+  commands.forEach(command => {
+    command.name = `dev-${command.name}`
+  })
+}
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 

@@ -6,7 +6,8 @@ dotenv.config()
 import { Client, Events, Collection, GatewayIntentBits } from 'discord.js';
 import { simplePrompt, lawOfOnePrompt } from './lib/ai/src/connect/prompts.js'
 
-const token = process.env.DISCORD_BOT_TOKEN || '';
+const TOKEN = process.env.DISCORD_BOT_TOKEN || '';
+const DEV = process.env.NODE_ENV != 'production'
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -18,21 +19,46 @@ client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
+const commands = [{
+  name: 'ai',
+  action: async (interaction) => {
+    const input = interaction.options.getString('input', { discord: true })
+    if(!input) return
+    await interaction.reply(`Prompt: ${input}`);
+    const response = await simplePrompt(input)
+    await interaction.editReply(`Prompt: ${input}\nResponse: ${response}`);
+  }
+}, 
+{
+  name: 'ra',
+  action: async (interaction) => {
+    const input = interaction.options.getString('input', { discord: true })
+    if(!input) return
+    await interaction.reply(`Prompt: ${input}`);
+    const response = await lawOfOnePrompt(input)
+    await interaction.editReply(`Prompt: ${input}\n${response}`);
+  }
+}]
+
+if(DEV){
+  commands.forEach(command => {
+    command.name = `dev-${command.name}`
+  })
+}
+
+const commandsByName = {}
+
+commands.forEach(command => {
+  commandsByName[command.name] = command
+})
+
 client.on('interactionCreate', async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === 'ai') {
-    const input = interaction.options.getString('input')
-    if(!input) return
-    await interaction.reply(`Prompt: ${input}\nResponse: ${await simplePrompt(input)}`);
-  }
-
-  if (interaction.commandName === 'ra') {
-    const input = interaction.options.getString('input')
-    if(!input) return
-    await interaction.reply(`Prompt: ${input}\n${await lawOfOnePrompt(input)}`);
-  }
+  const command = commandsByName[interaction.commandName]
+  if(!command) return
+  command.action(interaction)
 });
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(TOKEN);
