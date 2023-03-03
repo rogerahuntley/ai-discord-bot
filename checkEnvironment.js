@@ -3,10 +3,9 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 const requiredVariables = [
+  'DISCORD_BOT_TOKEN',
   'DISCORD_CLIENT_SECRET',
   'DISCORD_CLIENT_ID',
-  'DISCORD_SERVER_ID',
-  'DISCORD_CHANNEL_ID',
   'OPENAI_API_KEY'
 ]
 
