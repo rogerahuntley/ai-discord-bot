@@ -1,0 +1,3 @@
+[submodule "lib/ai"]
+	path = lib/ai
+	url = https://github.com/rogerahuntley/ai-scripts
