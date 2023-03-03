@@ -1,0 +1,8 @@
+# fly configuration
+
+app = "steal-dog-discord-bot"
+
+[env]
+
+[build]
+  dockerfile = "dockerfile"
