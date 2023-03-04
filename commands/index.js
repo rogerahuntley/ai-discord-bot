@@ -1,12 +1,14 @@
 import { ai } from "./ai.js";
 import { ra } from "./ra.js";
 import { seth } from './seth.js';
+import { playlist } from "./playlist.js";
 
 import { DEV } from "../devops/environmentVariables.js";
 
-let commands = [ai, ra, seth]
+let commands = [ai, ra, seth, playlist]
 
 commands.forEach(command => command.definition = command.definition.toJSON())
+commands = commands.filter(command => !command.disabled)
 
 if(DEV){
   commands.forEach(command => {
