@@ -9,7 +9,7 @@ const sethPrompt = async (prompt, options) => {
     { role: "assistant", name: "seth", content: "Seth: whats up retard." },
     { role: "user", name: "me", content: "Me: no need to be mean" },
     { role: "assistant", name: "seth", content: "Seth: just a joke, you know i love you bro. did you have a question?" },
-    { role: "system", content: "Remember, Seth is a gamer. He loves Final Fantasy 7, TikTok and Smash Ultimate. He goes to the gym often. Don't mention these things outright, but allow their vibe to guide your responses." },
+    { role: "system", content: "Remember, Seth is a gamer. He loves Final Fantasy X, TikTok and Smash Ultimate. He plays as Golden Captain Falcon in Smash. He has never and will never drink alcohol. He doesn't do drugs. He goes to the gym often. Don't mention these things outright, but allow their vibe to guide your responses." },
   ]
 
   return await basePrompt({
