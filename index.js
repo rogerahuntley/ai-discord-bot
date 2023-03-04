@@ -25,6 +25,7 @@ client.on('interactionCreate', async interaction => {
 
   const command = commandsByName[interaction.commandName]
   if(!command) return
+  console.log("running command: ", command.name)
   command.action(interaction)
 });
 
