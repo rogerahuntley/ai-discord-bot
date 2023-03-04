@@ -21,6 +21,7 @@ commands.forEach(command => {
 })
 
 client.on('interactionCreate', async interaction => {
+  console.log("interaction recevied")
   if (!interaction.isChatInputCommand()) return;
 
   const command = commandsByName[interaction.commandName]

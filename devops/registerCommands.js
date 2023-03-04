@@ -6,7 +6,6 @@ import { commands as _commands } from '../commands/index.js'
 const commands = _commands.map(command => command.definition)
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
-
 (async () => {
   try {
     console.log('Started refreshing application (/) commands.');

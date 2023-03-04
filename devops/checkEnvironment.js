@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import * as ENV from './environmentVariables.js'
+import * as dotenv from 'dotenv' 
+dotenv.config()
 
 // Check for required environment variables
 const requiredVariables = [

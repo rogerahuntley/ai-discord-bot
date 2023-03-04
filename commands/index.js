@@ -13,6 +13,10 @@ if(DEV){
     command.name            = `dev-${command.definition.name}`
     command.definition.name = `dev-${command.definition.name}`
   })
+} else {
+  commands.forEach(command => {
+    command.name            = command.definition.name
+  })
 }
 
 export { commands };
