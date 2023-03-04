@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { lawOfOnePrompt } from '../lib/ai/src/connect/prompts/index.js';
+import { lawOfOnePrompt } from './customPrompts/lawOfOnePrompt.js'
 
 const ra = {
   definition:
