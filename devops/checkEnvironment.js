@@ -1,7 +1,7 @@
-// Check for required environment variables
-import * as dotenv from 'dotenv' 
-dotenv.config()
+// eslint-disable-next-line no-unused-vars
+import * as ENV from './environmentVariables.js'
 
+// Check for required environment variables
 const requiredVariables = [
   'DISCORD_BOT_TOKEN',
   'DISCORD_CLIENT_SECRET',

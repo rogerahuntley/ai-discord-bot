@@ -3,7 +3,7 @@
 set -e
 
 # Check environment variables
-if node /app/checkEnvironment.js; then
+if node /app/devops/checkEnvironment.js; then
   # Register the bot with the Discord API
   npm run register
 

@@ -12,7 +12,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "register": "node registerCommands.js",
+    "register": "node devops/registerCommands.js",
     "start": "node index.js"
   },
   "repository": {
