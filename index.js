@@ -4,7 +4,7 @@ dotenv.config()
 
 // Require the necessary discord.js classes
 import { Client, Events, Collection, GatewayIntentBits } from 'discord.js';
-import { simplePrompt, lawOfOnePrompt } from './lib/ai/src/connect/prompts.js'
+import { simplePrompt, lawOfOnePrompt } from './lib/ai/src/connect/prompts/index.js'
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN || '';
 const DEV = process.env.NODE_ENV != 'production'
