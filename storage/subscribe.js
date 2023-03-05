@@ -12,6 +12,19 @@ async function subscribeToAllThreads(client) {
     if(command) {
       try{
         const thread = await client.channels.fetch(knownThread.id);
+        if(!thread){
+          console.log(`Thread ${knownThread.id} not found.`);
+          prisma.threads.delete({
+            where: {
+              id: knownThread.id
+            }
+          }).then(() => {
+            console.log(`Deleted thread ${knownThread.id} from database.`);
+          }).catch(error => {
+            console.error('Error deleting thread:', error);
+          });
+          continue;
+        }
         await subscribeToThread(thread, command.threadResponse);
       } catch (error) {
         console.log(error)

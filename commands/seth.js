@@ -23,6 +23,7 @@ const threadResponse = async (input, thread) => {
 }
 
 const seth = {
+  disabled: true,
   definition:
     new SlashCommandBuilder()
     .setName('seth')

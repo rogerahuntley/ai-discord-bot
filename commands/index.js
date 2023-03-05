@@ -8,6 +8,9 @@ let commands = [ai, ra, seth]
 
 commands.forEach(command => command.definition = command.definition.toJSON())
 
+
+commands = commands.filter(command => !command.disabled)
+
 if(DEV){
   commands.forEach(command => {
     command.name            = `dev-${command.definition.name}`
