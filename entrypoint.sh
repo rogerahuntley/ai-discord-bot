@@ -4,6 +4,12 @@ set -e
 
 # Check environment variables
 if node /app/devops/checkEnvironment.js; then
+  # Run migrations
+  npx prisma migrate deploy
+
+  # Set up prisma
+  npx prisma generate
+
   # Register the bot with the Discord API
   npm run register
 

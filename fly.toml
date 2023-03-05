@@ -3,7 +3,11 @@
 app = "steal-dog-discord-bot"
 
 [env]
-  NODE_ENV = "production"
+NODE_ENV = "production"
 
 [build]
-  dockerfile = "dockerfile"
+dockerfile = "dockerfile"
+
+[mount]
+source="steal_dog_db"
+destination="/app/prisma/db"

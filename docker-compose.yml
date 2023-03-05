@@ -4,7 +4,5 @@ services:
     build: .
     image: steal-dog-discord-bot
     container_name: bot
-    # volumes:
-    #   - ./:/app
-    # ports:
-    #   - "8080:8080"
+    volumes:
+      - ./prisma/db:/app/prisma/db
