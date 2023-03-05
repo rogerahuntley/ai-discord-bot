@@ -59,25 +59,65 @@ const sethInstructions = "You are a clone built to be exactly like my friend nam
 const sethReminder = "You are Seth."
 
 const sethPrompt = async (prompt, options) => {
-  options = {...defaultOptions, ...options, max_tokens: 500}
+  options = {...defaultOptions, ...options,
+    temperature: 0.9,
+    frequency_penalty: 0.5,
+    max_tokens: 2000,
+    top_p: 1,
+    presence_penalty: 1,
+    stop: [ '||>', '\nSeth:' ],}
 
   const username = options.user || "user"
-  const messages = [
-    { role: "user", name: "rules", content:  sethInstructions },
-  ]
 
-  const newMessages = [
-    { role: "system", name: "user", content:  sethReminder },
-    { role: "user", name: username, content: `${prompt}` },
-  ]
+  // const baseMessages = [
+  //   { role: "user", name: "rules", content:  sethInstructions },
+  // ]
+
+  const chatMessages = options.messages || [{username: username, content: prompt, isBot: false}]
+
+  // const newMessages = [
+  //   { role: "system", name: "instruction", content:  sethReminder },
+  //   { role: "user", name: username, content: `${prompt}` },
+  // ]
+
+  const instruction = {
+    role: 'system',
+    name: 'instructions',
+    content: '||>Instructions:\n' +
+      sethInstructions
+  }
+
+  const endHistory = '||>Seth:\n'
+
+  const history = {
+    role: 'system',
+    name: 'history',
+    content: `||>${username}:\n` +
+      'hey man what\'s up\n' +
+      '||>Seth:\n' +
+      'not much man hbu?\n'
+  }
+
+  chatMessages.forEach(message => {
+    const contentAdd = `||>${message.username}:\n${message.content}\n`
+    history.content += contentAdd
+  })
+
+  history.content += endHistory
+
+  const reminder = {
+    role: 'system',
+    name: 'reminder',
+    content: sethReminder
+  }
 
   return await basePrompt({
     ...options,
     messages: [
-      ...messages,
-      ...(options.messages || []),
-      ...newMessages,
-    ],
+      instruction,
+      history,
+      reminder
+    ]
   })
 }
 

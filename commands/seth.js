@@ -14,7 +14,7 @@ const threadResponse = async (input, thread) => {
   .map(message =>
     { return {
       role: message.isBot ? 'assistant' : 'user',
-      name: message.isBot ? 'seth' : message.username,
+      username: message.isBot ? 'Seth' : message.username,
       content: message.content
     }})
   .filter(message => typeof message.content === 'string')
