@@ -18,7 +18,7 @@ const threadResponse = async (input, thread) => {
       content: message.content
     }})
   .filter(message => typeof message.content === 'string')
-  const response = await sethPrompt(input, { thread: thread.name, messages })
+  const response = await sethPrompt(input, { thread: thread.name, messages, username: messages.at(-1).username })
   return response
 }
 
@@ -39,7 +39,7 @@ const seth = {
     const thread_input = interaction.options.getString('thread')
     if(input){
       await interaction.reply(`Prompt: ${input}`);
-      const response = await sethPrompt(input)
+      const response = await sethPrompt(input, { username: interaction.user.username })
       await interaction.editReply(`Prompt: ${input}\n${response}`);
 
     } else if (thread_input) {
@@ -58,7 +58,7 @@ const seth = {
         interaction.editReply("Thread created!")
 
         // respond in the thread
-        const response = await sethPrompt(thread_input, { user: interaction.user.username })
+        const response = await sethPrompt(thread_input, { username: interaction.user.username })
         thread.send(response)
 
         subscribeToThread(thread, threadResponse)

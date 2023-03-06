@@ -27,7 +27,7 @@ async function subscribeToAllThreads(client) {
         }
         await subscribeToThread(thread, command.threadResponse);
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }
