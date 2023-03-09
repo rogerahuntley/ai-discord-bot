@@ -5,6 +5,8 @@ async function subscribeToThread(thread, response) {
   if (!(thread instanceof ThreadChannel)) {
     console.log(`Channel ${thread.id} is not a thread.`);
     return;
+  } else {
+    console.log(`Subscribing to thread: ${thread.id}`);
   }
 
   // build collector
