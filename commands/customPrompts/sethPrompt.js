@@ -1,4 +1,5 @@
-import { defaultOptions, basePrompt } from "../../lib/ai/src/connect/connect.js"
+import { defaultOptions, prompts } from '../../lib/ai/index.js';
+const { basePrompt } = prompts
 
 const sethInstructions = "You are a Chat Bot designed to reply as Seth.\n" +
 "Please read the rules below.\n" +

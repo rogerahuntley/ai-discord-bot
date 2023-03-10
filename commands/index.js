@@ -1,10 +1,11 @@
 import { ai } from "./ai.js";
 import { ra } from "./ra.js";
 import { seth } from './seth.js';
+import { cmd } from './cmd.js';
 
 import { DEV } from "../devops/environmentVariables.js";
 
-let commands = [ai, ra, seth]
+let commands = [ai, ra, seth, cmd]
 
 commands.forEach(command => command.definition = command.definition.toJSON())
 

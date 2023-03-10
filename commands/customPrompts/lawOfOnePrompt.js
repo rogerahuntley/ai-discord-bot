@@ -1,4 +1,5 @@
-import { defaultOptions, basePrompt } from "../../lib/ai/src/connect/connect.js"
+import { defaultOptions, prompts } from '../../lib/ai/index.js';
+const { basePrompt } = prompts;
 
 const lawOfOnePrompt = async (prompt, options) => {
   options = {...defaultOptions, ...options, max_tokens: 500}

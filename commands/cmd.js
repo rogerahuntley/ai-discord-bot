@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { prompts } from '../lib/ai/index.js';
 import { createThread, subscribeToThread } from '../storage/thread.js'
-const { simplePrompt } = prompts
+const { commandPrompt } = prompts
 
 const threadResponse = async (input, thread) => {
   const messages = await (await thread.messages.fetch({ limit: 20 }))
@@ -19,27 +19,24 @@ const threadResponse = async (input, thread) => {
       content: message.content
     }})
   .filter(message => typeof message.content === 'string')
-  const response = await simplePrompt(input, { thread: thread.name, messages, username: messages.at(-1).name, discord: true })
+  const response = await commandPrompt(input, { thread: thread.name, messages, username: messages.at(-1).name, discord: true })
   return response
 }
 
-const ai = {
+const cmd = {
   definition:
     new SlashCommandBuilder()
-      .setName('ai')
-      .setDescription('Short AI Query')
-      .addStringOption(option =>
-        option.setName('input')
-          .setDescription('The input to the AI'))
+      .setName('cmd')
+      .setDescription('Open Terminal')
       .addStringOption(option =>
         option.setName('thread')
-          .setDescription('Start a thread with AI')),
+          .setDescription('Open a CMD thread')),
     action: async (interaction) => {
       const input = interaction.options.getString('input')
       const thread_input = interaction.options.getString('thread')
       if(input){
         await interaction.reply(`Prompt: ${input}`);
-        const response = await simplePrompt(input, { username: interaction.user.username, discord: true })
+        const response = await commandPrompt(input, { username: interaction.user.username, discord: true })
         await interaction.editReply(`Prompt: ${input}\n${response}`);
   
       } else if (thread_input) {
@@ -48,7 +45,7 @@ const ai = {
   
         // create the thread
         threadManager.create({
-          name: `AI Thread: ${thread_input}`,
+          name: `CMD Thread: ${thread_input}`,
           autoArchiveDuration: 60,
           reason: 'Thread created by bot'
         }).then(async thread => {
@@ -58,15 +55,15 @@ const ai = {
           interaction.editReply("Thread created!")
   
           // respond in the thread
-          const response = await simplePrompt(thread_input, { username: interaction.user.username, discord: true })
+          const response = await commandPrompt(thread_input, { username: interaction.user.username, discord: true })
           thread.send(response)
   
           subscribeToThread(thread, threadResponse)
         });
       }
     },
-  threadType: 'ai',
+  threadType: 'cmd',
   threadResponse
 }
 
-export { ai }
+export { cmd }
