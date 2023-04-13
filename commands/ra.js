@@ -2,6 +2,7 @@ import { SlashCommandBuilder } from 'discord.js';
 import { lawOfOnePrompt } from './customPrompts/lawOfOnePrompt.js'
 
 const ra = {
+  disabled: false,
   definition:
     new SlashCommandBuilder()
     .setName('ra')

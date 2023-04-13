@@ -24,6 +24,7 @@ const threadResponse = async (input, thread) => {
 }
 
 const ai = {
+  disabled: false,
   definition:
     new SlashCommandBuilder()
       .setName('ai')

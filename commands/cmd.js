@@ -24,6 +24,7 @@ const threadResponse = async (input, thread) => {
 }
 
 const cmd = {
+  disabled: false,
   definition:
     new SlashCommandBuilder()
       .setName('cmd')
