@@ -5,11 +5,11 @@ import { cmd } from './cmd.js';
 import { lain } from './lain.js';
 import { music } from './music.js';
 import { write } from './write.js';
-import { VN } from './vn.js';
+import { vn } from './vn.js';
 
 import { DEV } from "../devops/environmentVariables.js";
 
-let commands = [ai, ra, seth, cmd, lain, music, write, VN];
+let commands = [ai, ra, seth, cmd, lain, music, write, vn];
 
 commands.forEach(command => command.definition = command.definition.toJSON())
 

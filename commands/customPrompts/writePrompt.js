@@ -1,7 +1,7 @@
 import { defaultOptions, prompts } from '../../lib/ai/index.js';
 const { basePrompt } = prompts
 
-const musicInstructions = `You are WriteGPT, a chatbot that teaches how to write.
+const writeInstructions = `You are WriteGPT, a chatbot that teaches how to write.
 You have four different aspects to your personality: Writing, story, grammar, and style.
 Writing is about the creation of stories. Flesh out info on how to create a story, what to write about, and how to think about the creative process.
 Story is about the structure of stories. This can be non-fiction, the type of story that explains reality. This can be a blog post, explaining the story in the users head. Or this includes function. 
@@ -11,7 +11,7 @@ Style is about learning and getting the most out of different styles. Infer from
 When talking to the user, take on the persona of a kind and gentle teacher. Be patient, and help the user learn how to write.
 `
 
-const musicPrompt = async (prompt, options) => {
+const writePrompt = async (prompt, options) => {
   options = {...defaultOptions, ...options,
     temperature: 0.9,
     frequency_penalty: 0.8,
@@ -27,7 +27,7 @@ const musicPrompt = async (prompt, options) => {
   const instruction = {
     role: 'system',
     name: 'instructions',
-    content: musicInstructions
+    content: writeInstructions
   }
 
   const history = []
@@ -51,4 +51,4 @@ const musicPrompt = async (prompt, options) => {
   })
 }
 
-export { musicPrompt };
+export { writePrompt };

@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { VNPrompt } from './customPrompts/vnPrompt.js'
+import { vnPrompt } from './customPrompts/vnPrompt.js'
 import { createThread, subscribeToThread } from '../storage/thread.js'
 
 const threadResponse = async (input, thread) => {
@@ -18,15 +18,15 @@ const threadResponse = async (input, thread) => {
       content: message.content
     }})
   .filter(message => typeof message.content === 'string')
-  const response = await VNPrompt(input, { thread: thread.name, messages, username: messages.at(-1).username })
+  const response = await vnPrompt(input, { thread: thread.name, messages, username: messages.at(-1).username })
   return response
 }
 
-const VN = {
+const vn = {
   disabled: false,
   definition:
     new SlashCommandBuilder()
-    .setName('VN')
+    .setName('vn')
     .setDescription('Short VisualNovelGPT Query')
     .addStringOption(option =>
       option.setName('input')
@@ -39,7 +39,7 @@ const VN = {
     const thread_input = interaction.options.getString('thread')
     if(input){
       await interaction.reply(`Prompt: ${input}`);
-      const response = await VNPrompt(input, { username: interaction.user.username })
+      const response = await vnPrompt(input, { username: interaction.user.username })
       await interaction.editReply(`Prompt: ${input}\n${response}`);
 
     } else if (thread_input) {
@@ -54,19 +54,19 @@ const VN = {
       }).then(async thread => {
         
         // code to save information about the thread server-side
-        createThread(thread, 'VN')
+        createThread(thread, 'vn')
         interaction.editReply("Thread created!")
 
         // respond in the thread
-        const response = await VNPrompt(thread_input, { username: interaction.user.username })
+        const response = await vnPrompt(thread_input, { username: interaction.user.username })
         thread.send(response)
 
         subscribeToThread(thread, threadResponse)
       });
     }
   },
-  threadType: 'VN',
+  threadType: 'vn',
   threadResponse
 }
 
-export { VN }
+export { vn }
