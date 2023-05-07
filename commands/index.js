@@ -7,10 +7,13 @@ import { music } from './music.js';
 import { write } from './write.js';
 import { vn } from './vn.js';
 import { lift } from './lift.js'
+import { admin } from './admin.js'
+import { weeb } from './weeb.js'
+import { jockey } from './jockey.js'
 
 import { DEV } from "../devops/environmentVariables.js";
 
-let commands = [ai, ra, seth, cmd, lain, music, write, vn, lift];
+let commands = [ai, ra, seth, cmd, lain, music, write, vn, lift, admin, weeb, jockey];
 
 commands.forEach(command => command.definition = command.definition.toJSON())
 
