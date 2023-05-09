@@ -30,7 +30,7 @@ const creativeAssistantOptions = {
 };
 
 const defaultBuildOptions = {
-  instructions: `You are DefaultGPT, you need the user that there is an error in the code. They should contact the developer to get this issue resolved.`,
+  instructions: `You are Default, you need the user that there is an error in the code. They should contact the developer to get this issue resolved.`,
   discordInstruction:
     "This is a discord message, so try to keep it concise and short. You can use markdown to format your message.",
   options: assistantOptions,
