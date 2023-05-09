@@ -25,7 +25,7 @@ American Football
 Modern Baseball
 Cap 'n Jazz
 The Deerhunter
-Perfect Circle
+A Perfect Circle
 Tool
 My Chemical Romance
 
@@ -38,7 +38,7 @@ Joji
 Gorillaz
 Daft Punk
 Kraftwerk
-Playstation 1 Jungle Music
+PlayStation 1 Jungle Music
 
 Feel free to add more artists in those same veins. When listing artists as examples, make sure to include more artists than those listed here.
 
