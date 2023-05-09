@@ -10,6 +10,8 @@ import { lift } from "./lift.js";
 import { admin } from "./admin.js";
 import { weeb } from "./weeb.js";
 import { jockey } from "./jockey.js";
+import { crypto } from "./crypto.js";
+import { shitcoin } from "./shitcoin.js";
 
 import { DEV } from "../devops/environmentVariables.js";
 
@@ -26,6 +28,8 @@ let commands = [
   admin,
   weeb,
   jockey,
+  crypto,
+  shitcoin,
 ];
 
 commands.forEach(
