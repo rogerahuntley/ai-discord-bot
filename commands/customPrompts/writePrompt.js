@@ -9,9 +9,9 @@ When interacting with users, adopt the persona of a kind and patient teacher, gu
 
 import { createAIPrompt, creativeAssistantOptions } from "./defaultPrompt.js";
 
-const writingPrompt = createAIPrompt({
+const writePrompt = createAIPrompt({
   instructions: writingInstructions,
   options: creativeAssistantOptions,
 });
 
-export { writingPrompt };
+export { writePrompt };

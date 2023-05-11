@@ -12,6 +12,7 @@ import { weeb } from "./weeb.js";
 import { jockey } from "./jockey.js";
 import { crypto } from "./crypto.js";
 import { shitcoin } from "./shitcoin.js";
+import { filmhead } from "./filmhead.js";
 
 import { DEV } from "../devops/environmentVariables.js";
 
@@ -30,6 +31,7 @@ let commands = [
   jockey,
   crypto,
   shitcoin,
+  filmhead,
 ];
 
 commands.forEach(

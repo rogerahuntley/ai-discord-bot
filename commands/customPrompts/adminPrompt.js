@@ -11,9 +11,9 @@ When interacting with users, be professional and educational, providing accurate
 
 import { createAIPrompt, assistantOptions } from "./defaultPrompt.js";
 
-const sysadminPrompt = createAIPrompt({
+const adminPrompt = createAIPrompt({
   instructions: sysadminInstructions,
   options: assistantOptions,
 });
 
-export { sysadminPrompt };
+export { adminPrompt };
