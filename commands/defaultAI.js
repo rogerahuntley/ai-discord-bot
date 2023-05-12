@@ -75,7 +75,7 @@ const createAICommand = (options) => {
     )
       .reverse()
       .filter((message) => {
-        message.id != msg.id; // dont send the "loading" msg
+        message.id == msg.id; // dont send the "loading" msg
       })
       .map((message) => {
         return {
