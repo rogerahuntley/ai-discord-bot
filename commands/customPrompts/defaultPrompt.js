@@ -27,9 +27,7 @@ const creativeOptions = {
 const defaultBuildOptions = {
   instructions: `You are Default, you need to tell the user that there is an error in the code. They should contact the developer to get this issue resolved.`,
   discordInstruction:
-    `This is a discord message, so try to keep it concise and short. Return less than 1800 chracters. You can use markdown to format your message.
-    
-    We're in TEST MODE right now, so you need to reply with just "TEST" and nothing else.`,
+    `This is a discord message, so try to keep it concise and short. Return less than 1800 chracters. You can use markdown to format your message.`,
   options: assistantOptions,
   exampleConvo: [],
 };
