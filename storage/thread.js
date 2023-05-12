@@ -26,7 +26,7 @@ async function subscribeToThread(thread, response) {
   });
 }
 
-const createThread = (thread, type = "unknown") => {
+const createThread = async (thread, type = "unknown") => {
   const data = {
     id: thread.id,
     channelId: thread.parentId,
@@ -34,7 +34,7 @@ const createThread = (thread, type = "unknown") => {
     name: thread.name,
     type: type,
   };
-  prisma.thread
+  await prisma.thread
     .create({
       data,
     })

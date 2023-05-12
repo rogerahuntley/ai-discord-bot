@@ -75,7 +75,7 @@ const createAICommand = (options) => {
     )
       .reverse()
       .filter((message) => {
-        message.id == msg.id; // dont send the "loading" msg
+        return message.id != msg.id; // dont send the "loading" msg
       })
       .map((message) => {
         return {
@@ -88,7 +88,7 @@ const createAICommand = (options) => {
       .map((message) => {
         return {
           role: message.isBot ? "assistant" : "user",
-          username: message.isBot ? options.aiName : message.username,
+          name: message.isBot ? options.aiName : message.username,
           content: message.content,
         };
       })
@@ -100,7 +100,7 @@ const createAICommand = (options) => {
       {
         thread: thread.name,
         messages,
-        username: messages.at(-1)?.username,
+        name: messages.at(-1)?.name,
       }
     );
     return response;
@@ -116,7 +116,7 @@ const createAICommand = (options) => {
         (content) => interaction.editReply(content.slice(0, 1800)),
         input,
         {
-          username: interaction.user.username,
+          name: interaction.user.username,
         },
         (s) => `Prompt: ${input}\n${s}`
       );
@@ -125,13 +125,18 @@ const createAICommand = (options) => {
       const threadManager = interaction.channel.threads;
       await interaction.reply(`Creating thread: ${thread_input}...`);
 
+      let thread_title = "";
+      try {
       // truncate the thread title if it's too long
-      let thread_title = await simplePrompt(
-        "summarize this into a short title: " + thread_input,
-        { model: "gpt-3.5-turbo" }
-      );
-      thread_title =
-        thread_input.length > 90 ? thread_input.slice(0, 90) : thread_input;
+        thread_title = await simplePrompt(
+          "summarize this into a short title: " + thread_input,
+          { model: "gpt-3.5-turbo" }
+        );
+        thread_title = thread_title.slice(0, 90);
+      } catch(err) {
+        console.log(err);
+        thread_title = thread_input.slice(0, 90);
+      }
 
       // create the thread
       threadManager
@@ -142,7 +147,9 @@ const createAICommand = (options) => {
         })
         .then(async (thread) => {
           // code to save information about the thread server-side
-          createThread(thread, options.aiName);
+          await createThread(thread, options.aiName);
+          await subscribeToThread(thread, threadResponse);
+
           interaction.editReply("Thread created!");
 
           // respond in the thread
@@ -153,11 +160,11 @@ const createAICommand = (options) => {
             (content) => msg.edit({ content: content.slice(0, 1800) }),
             thread_input,
             {
-              username: interaction.user.username,
+              // url encode
+              // username:  interaction.user.username,
+              name: interaction.user.username,
             }
           );
-
-          subscribeToThread(thread, threadResponse);
 
           return response;
         });

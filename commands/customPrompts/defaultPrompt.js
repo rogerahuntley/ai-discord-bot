@@ -42,10 +42,10 @@ const createAIPrompt = (buildOptions) => {
       ...buildOptions.options,
     };
 
-    const username = options.username || "User";
+    const username = options.username || options.name || "User";
 
     const chatMessages = options.messages || [
-      { role: "user", username: username, content: prompt },
+      { role: "user", name: username, content: prompt },
     ];
 
     const instruction = {
@@ -60,7 +60,7 @@ const createAIPrompt = (buildOptions) => {
     chatMessages.forEach((message) => {
       history.push({
         role: message.role,
-        name: message.username,
+        name: message.name || message.username,
         content: `${message.content}`,
       });
     });
@@ -80,7 +80,16 @@ const createAIPrompt = (buildOptions) => {
       Example conversation end.`;
     }
 
-    const finalMessages = [instruction, ...history];
+    const finalMessages = [instruction, ...history].map(
+      ({ role, name, content }) => {
+        return role == "system" ? { role, name, content } : { role, content };
+      }
+    );
+
+    console.log({
+      ...options,
+      messages: finalMessages,
+    })
 
     return basePrompt(
       {
