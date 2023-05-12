@@ -20,7 +20,7 @@ async function subscribeToThread(thread, response) {
     if (!response) {
       thread.send(`Thank you for your reply, ${reply.author.username}!`);
     } else {
-      const msg = await thread.send(`Reply loading...`);
+      const msg = await thread.send(`Loading Response...`);
       await response(reply.content, thread, msg);
     }
   });

@@ -34,29 +34,37 @@ const createAICommand = (options) => {
     // const msg = await thread.send(`Loading Response...`);
 
     let buildingResponse = "";
+    let updateTimer = null;
+    let response = null;
 
-    // aiPrompt returns a streamable promise
-    const response = options.aiPrompt(prompt, {
-      ...promptOptions,
-      stream: true,
-      handleStream: async (response) => {
-        buildingResponse = response;
-      },
-    });
+    try {
+      // aiPrompt returns a streamable promise
+      response = options.aiPrompt(prompt, {
+        ...promptOptions,
+        stream: true,
+        handleStream: async (response) => {
+          buildingResponse = response;
+        },
+      });
 
-    // update partial message every second
-    const updateTimer = setInterval(async () => {
-      if (buildingResponse) {
-        await editFunc(wrapPrompt(buildingResponse));
-      }
-    }, MESSAGE_DELAY);
+      // update partial message every second
+      updateTimer = setInterval(async () => {
+        if (buildingResponse) {
+          await editFunc(wrapPrompt(buildingResponse));
+        }
+      }, MESSAGE_DELAY);
 
-    // wait for the response to finish building
-    await response.then((response) => {
-      // send the response to the thread
+      // wait for the response to finish building
+      await response.then((response) => {
+        // send the response to the thread
+        clearInterval(updateTimer);
+        editFunc(wrapPrompt(response.toString()));
+      });
+    } catch (err) {
+      console.log(err);
       clearInterval(updateTimer);
-      editFunc(wrapPrompt(response.toString()));
-    });
+      editFunc(wrapPrompt("Error"));
+    }
 
     return response;
   };
@@ -66,6 +74,9 @@ const createAICommand = (options) => {
       await thread.messages.fetch({ limit: 20 })
     )
       .reverse()
+      .filter((message) => {
+        message.id != msg.id; // dont send the "loading" msg
+      })
       .map((message) => {
         return {
           id: message.id,
@@ -84,12 +95,12 @@ const createAICommand = (options) => {
       .filter((message) => typeof message.content === "string");
 
     const response = await delayedResponse(
-      (content) => msg.edit({ content }),
+      (content) => msg.edit({ content: content.slice(0, 1800) }),
       input,
       {
         thread: thread.name,
         messages,
-        username: messages.at(-1).username,
+        username: messages.at(-1)?.username,
       }
     );
     return response;
@@ -102,7 +113,7 @@ const createAICommand = (options) => {
       await interaction.reply(`Prompt: ${input}`);
       // deplayed response will update the message for us
       const response = await delayedResponse(
-        (content) => interaction.editReply(content),
+        (content) => interaction.editReply(content.slice(0, 1800)),
         input,
         {
           username: interaction.user.username,
@@ -139,7 +150,7 @@ const createAICommand = (options) => {
 
           // deplayed response will update the message for us
           const response = await delayedResponse(
-            (content) => msg.edit({ content }),
+            (content) => msg.edit({ content: content.slice(0, 1800) }),
             thread_input,
             {
               username: interaction.user.username,

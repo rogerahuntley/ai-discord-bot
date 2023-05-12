@@ -1,38 +1,35 @@
 import { defaultOptions, prompts } from "../../lib/ai/index.js";
 const { basePrompt } = prompts;
 
-const assistantOptions = {
-  temperature: 0.3,
-  frequency_penalty: 0.6,
-  max_tokens: 2500,
-  top_p: 1,
-  presence_penalty: 0.8,
-  discord: true,
-  assistant: true,
-};
-
-const creativeOptions = {
+const superBaseOptions = {
   temperature: 0.9,
   frequency_penalty: 0.8,
   max_tokens: 2500,
   top_p: 1,
   presence_penalty: 0.8,
-  discord: true,
+};
+
+const assistantOptions = {
+  ...superBaseOptions,
+  temperature: 0.3,
 };
 
 const creativeAssistantOptions = {
+  ...superBaseOptions,
   temperature: 0.6,
-  frequency_penalty: 0.7,
-  max_tokens: 2500,
-  top_p: 1,
-  presence_penalty: 0.8,
-  discord: true,
+};
+
+const creativeOptions = {
+  ...superBaseOptions,
+  temperature: 0.9,
 };
 
 const defaultBuildOptions = {
-  instructions: `You are Default, you need the user that there is an error in the code. They should contact the developer to get this issue resolved.`,
+  instructions: `You are Default, you need to tell the user that there is an error in the code. They should contact the developer to get this issue resolved.`,
   discordInstruction:
-    "This is a discord message, so try to keep it concise and short. You can use markdown to format your message.",
+    `This is a discord message, so try to keep it concise and short. Return less than 1800 chracters. You can use markdown to format your message.
+    
+    We're in TEST MODE right now, so you need to reply with just "TEST" and nothing else.`,
   options: assistantOptions,
   exampleConvo: [],
 };
